@@ -45,21 +45,28 @@
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            gap: 20px;
         }
 
         .logo {
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            display: block;
             height: 80px;
+            width: auto;
         }
 
         .header h1 {
             color: var(--primary-blue);
             font-size: 2em;
             text-align: center;
-            flex: 1;
+            margin: 0;
         }
 
         /* Formulaire d'inscription */
@@ -335,18 +342,11 @@
             }
 
             .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0 10px;
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .header h1 {
-                font-size: 1.3em;
-                margin-left: 10px;
-            }
-
-            .logo {
+            .logo img {
                 height: 60px;
             }
 
