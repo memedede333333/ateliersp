@@ -49,17 +49,21 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            gap: 20px;
+            gap: 30px;
         }
 
         .logo {
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
         }
 
         .logo img {
             display: block;
             height: 80px;
             width: auto;
+            max-width: 300px;
+            object-fit: contain;
         }
 
         .header h1 {
@@ -67,6 +71,7 @@
             font-size: 2em;
             text-align: center;
             margin: 0;
+            flex: 1;
         }
 
         /* Formulaire d'inscription */
