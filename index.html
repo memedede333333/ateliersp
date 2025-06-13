@@ -510,6 +510,32 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+/* Message personnalisé */
+.message-personnalise {
+    background: #e3f2fd;
+    border-left: 4px solid var(--secondary-blue);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+.message-personnalise-content {
+    color: #1565c0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .message-personnalise {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+    }
+    
+    .message-personnalise-content {
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 <body>
@@ -526,6 +552,12 @@
     <div class="container">
         <!-- Alertes -->
         <div id="alert" class="alert"></div>
+        <!-- Message personnalisé -->
+<div id="messagePersonnalise" class="message-personnalise">
+    <div class="message-personnalise-content">
+        <span>📢 </span><span id="messagePersonnaliseTexte"></span>
+    </div>
+</div>
 
         <!-- Formulaire d'inscription -->
         <div class="inscription-form">
@@ -865,6 +897,11 @@
                     document.querySelector('.header h1').textContent = 
                         `Inscriptions Périscolaires ${adminParams['Année scolaire']}`;
                 }
+                // Afficher le message personnalisé
+if (adminParams['Message personnalisé'] && adminParams['Message personnalisé'].trim() !== '') {
+    document.getElementById('messagePersonnalise').style.display = 'block';
+    document.getElementById('messagePersonnaliseTexte').textContent = adminParams['Message personnalisé'];
+}
                 
                 // Charger les ateliers
                 const ateliersResponse = await fetch(
