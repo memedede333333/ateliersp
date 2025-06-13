@@ -367,7 +367,12 @@
             60% { content: '🔵🔵⚪'; }
             80%, 100% { content: '🔵🔵🔵'; }
         }
-    </style>
+                /* Animation de rotation */
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
 </head>
 <body>
     <header class="header">
@@ -456,6 +461,7 @@
         // État de l'application
         let selectedClasse = '';
         let studentInfo = {};
+        let inscriptionsEnCours = []; // Pour tracker les inscriptions en cours
 
         // Écouter les changements de classe
         document.getElementById('classe').addEventListener('change', function(e) {
@@ -523,13 +529,27 @@
         }
 
         // Fonction d'inscription
-        function inscrire(groupe) {
+        async function inscrire(groupe) {
             // Valider le formulaire
             const form = document.getElementById('studentForm');
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
+
+            // Récupérer le bouton cliqué
+            const bouton = event.target;
+            const texteOriginal = bouton.textContent;
+            
+            // Désactiver TOUS les boutons d'inscription
+            const tousBoutons = document.querySelectorAll('.btn-inscrire');
+            tousBoutons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'wait';
+            });
+            
+            // Changer le texte du bouton cliqué
+            bouton.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⏳</span> Inscription en cours...';
 
             // Récupérer les informations
             studentInfo = {
@@ -541,8 +561,51 @@
                 dateInscription: new Date().toLocaleString('fr-FR')
             };
 
-            // Simuler l'inscription (remplacer par l'appel API Google Sheets)
-            simulerInscription(studentInfo);
+            // Vérifier si déjà inscrit
+            const dejaInscrit = inscriptionsEnCours.some(inscription => 
+                inscription.email === studentInfo.email && 
+                inscription.atelier === studentInfo.atelier
+            );
+
+            if (dejaInscrit) {
+                showAlert('info', `${studentInfo.prenom} ${studentInfo.nom} est déjà inscrit(e) à cet atelier.`);
+                
+                // Réactiver les boutons
+                tousBoutons.forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.cursor = 'pointer';
+                });
+                bouton.textContent = texteOriginal;
+                return;
+            }
+
+            // Ajouter temporairement à la liste
+            inscriptionsEnCours.push({...studentInfo});
+
+            // Envoyer l'inscription
+            try {
+                await simulerInscription(studentInfo);
+                
+                // Réinitialiser le formulaire après succès
+                form.reset();
+                selectedClasse = '';
+                afficherAteliers();
+                
+            } catch (error) {
+                // En cas d'erreur, retirer de la liste temporaire
+                inscriptionsEnCours = inscriptionsEnCours.filter(i => 
+                    !(i.email === studentInfo.email && i.atelier === studentInfo.atelier)
+                );
+                
+                showAlert('error', 'Erreur lors de l\'inscription. Veuillez réessayer.');
+                
+                // Réactiver les boutons
+                tousBoutons.forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.cursor = 'pointer';
+                });
+                bouton.textContent = texteOriginal;
+            }
         }
 
         // Simuler l'inscription
@@ -656,14 +719,28 @@
                 );
                 const inscriptionsData = await inscriptionsResponse.json();
                 
-                // Compter les inscriptions par atelier
+                // Compter les inscriptions par atelier et stocker les inscriptions existantes
                 const compteurInscriptions = {};
+                inscriptionsEnCours = []; // Réinitialiser
+                
                 if (inscriptionsData.values) {
                     inscriptionsData.values.forEach(row => {
                         const atelier = row[5]; // Colonne F = Atelier
                         const statut = row[7]; // Colonne H = Statut
+                        const email = row[4]; // Colonne E = Email
+                        const prenom = row[1]; // Colonne B = Prénom
+                        const nom = row[2]; // Colonne C = Nom
+                        
                         if (atelier && statut !== 'Annulé') {
                             compteurInscriptions[atelier] = (compteurInscriptions[atelier] || 0) + 1;
+                            
+                            // Stocker les inscriptions existantes
+                            inscriptionsEnCours.push({
+                                email: email,
+                                atelier: atelier,
+                                prenom: prenom,
+                                nom: nom
+                            });
                         }
                     });
                 }
