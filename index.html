@@ -328,24 +328,145 @@
             border: 1px solid #bee5eb;
         }
 
-        /* Responsive */
+        /* Responsive amélioré */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+            }
+
+            .header h1 {
+                font-size: 1.3em;
+                margin-left: 10px;
             }
 
             .logo {
                 height: 60px;
-                margin-bottom: 10px;
+            }
+
+            .inscription-form {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .inscription-form h2 {
+                font-size: 1.3em;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group input, .form-group select {
+                font-size: 16px; /* Empêche le zoom sur iOS */
+                padding: 12px;
             }
 
             .ateliers-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .atelier-card {
+                padding: 15px;
+            }
+
+            .atelier-title {
+                font-size: 1.1em;
+            }
+
+            .atelier-info p {
+                font-size: 0.9em;
+                margin: 3px 0;
+            }
+
+            .places-indicator {
+                margin: 10px 0;
+                padding: 8px;
+            }
+
+            .places-text {
+                font-size: 0.9em;
+                min-width: 100px;
+            }
+
+            .btn-inscrire {
+                padding: 14px;
+                font-size: 15px;
             }
 
             .modal-content {
-                padding: 20px;
+                width: 95%;
+                padding: 20px 15px;
+                margin: 10px;
+            }
+
+            .modal h2 {
+                font-size: 1.3em;
+            }
+
+            .alert {
+                font-size: 14px;
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            /* Améliorer la lisibilité sur mobile */
+            body {
+                font-size: 16px;
+            }
+
+            /* Espacer les éléments du formulaire sur mobile */
+            .form-group {
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Très petits écrans */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.1em;
+            }
+
+            .atelier-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .atelier-icon {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+
+            .places-bar {
+                margin-right: 5px;
+            }
+
+            .places-text {
+                font-size: 0.85em;
+                min-width: 90px;
+            }
+        }
+
+        /* Support du mode paysage sur mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                padding: 10px 0;
+            }
+
+            .inscription-form {
+                margin-bottom: 15px;
+            }
+
+            .ateliers-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -441,6 +562,21 @@
                 </p>
                 <div class="modal-buttons">
                     <button class="btn-confirm" onclick="closeModal()">Fermer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal inscription existante -->
+        <div id="existingModal" class="modal">
+            <div class="modal-content">
+                <div class="warning-icon" style="font-size: 3em; color: #ff6b35; margin-bottom: 20px;">⚠️</div>
+                <h2 style="color: #ff6b35;">Inscription déjà existante</h2>
+                <div id="existingDetails"></div>
+                <p style="margin-top: 20px; color: #666;">
+                    Si vous souhaitez modifier cette inscription, veuillez contacter directement l'école.
+                </p>
+                <div class="modal-buttons">
+                    <button class="btn-confirm" onclick="closeExistingModal()">Compris</button>
                 </div>
             </div>
         </div>
@@ -568,7 +704,14 @@
             );
 
             if (dejaInscrit) {
-                showAlert('info', `${studentInfo.prenom} ${studentInfo.nom} est déjà inscrit(e) à cet atelier.`);
+                // Afficher la modal d'inscription existante
+                const details = `
+                    <p><strong>Élève :</strong> ${studentInfo.prenom} ${studentInfo.nom}</p>
+                    <p><strong>Atelier :</strong> ${groupe}</p>
+                    <p><strong>Email :</strong> ${studentInfo.email}</p>
+                `;
+                document.getElementById('existingDetails').innerHTML = details;
+                document.getElementById('existingModal').style.display = 'flex';
                 
                 // Réactiver les boutons
                 tousBoutons.forEach(btn => {
@@ -663,11 +806,19 @@
             }, 5000);
         }
 
-        // Fermer la modal en cliquant à l'extérieur
+        // Fermer la modal d'inscription existante
+        function closeExistingModal() {
+            document.getElementById('existingModal').style.display = 'none';
+        }
+
+        // Fermer les modals en cliquant à l'extérieur
         window.onclick = function(event) {
-            const modal = document.getElementById('confirmModal');
-            if (event.target == modal) {
+            const confirmModal = document.getElementById('confirmModal');
+            const existingModal = document.getElementById('existingModal');
+            if (event.target == confirmModal) {
                 closeModal();
+            } else if (event.target == existingModal) {
+                closeExistingModal();
             }
         }
 
