@@ -811,7 +811,7 @@
             const success = await saveToGoogleSheets({
                 ...info,
                 position: position,
-                statut: isWaitingList ? 'Liste d\'attente' : 'Inscrit'
+                statut: isWaitingList ? 'Liste d\'attente' : 'Préinscrit'
             });
 
             if (success) {
