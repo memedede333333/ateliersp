@@ -607,8 +607,8 @@
                 <h2>Préinscription enregistrée !</h2>
                 <div id="confirmDetails"></div>
                 <p style="margin-top: 20px; color: #666;">
-                    <strong>Important :</strong> La préinscription sera définitivement validée après réception du règlement par virement avant le vendredi 5 septembre minuit.
-                </p>
+    <strong>Important :</strong> <span id="messageVirementPopup">La préinscription sera définitivement validée après réception du règlement.</span>
+</p>
                 <div class="modal-buttons">
                     <button class="btn-confirm" onclick="closeModal()">Fermer</button>
                 </div>
@@ -642,6 +642,7 @@
 
         // Données des ateliers (sera remplacé par les données Google Sheets)
         let ateliersDataGlobal = [];
+        let adminParams = {}; // Pour stocker les paramètres admin
 
         // État de l'application
         let selectedClasse = '';
@@ -823,6 +824,10 @@
                 `;
 
                 document.getElementById('confirmDetails').innerHTML = details;
+                // Mettre à jour le message du popup avec le paramètre admin
+if (adminParams['Message virement popup']) {
+    document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
+}
                 document.getElementById('confirmModal').style.display = 'flex';
 
                 // Recharger les données pour avoir le compte à jour
@@ -881,7 +886,7 @@
                 const adminData = await adminResponse.json();
                 
                 // Extraire les paramètres admin (année, dates, etc.)
-                const adminParams = {};
+                adminParams = {};
                 if (adminData.values) {
                     adminData.values.forEach(row => {
                         if (row[0] && row[1]) {
