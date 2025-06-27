@@ -881,7 +881,7 @@ if (adminParams['Message virement popup']) {
                 
                 // Charger les paramètres depuis l'onglet Admin
                 const adminResponse = await fetch(
-                    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${ADMIN_SHEET}!A1:B10?key=${API_KEY}`
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${ADMIN_SHEET}!A1:B15?key=${API_KEY}`
                 );
                 const adminData = await adminResponse.json();
                 
