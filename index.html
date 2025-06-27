@@ -1000,5 +1000,47 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
             setInterval(loadFromGoogleSheets, 30000);
         });
     </script>
+    <!-- Communication avec WordPress pour ajustement hauteur -->
+<script>
+// Fonction pour envoyer la hauteur au parent WordPress
+function sendHeight() {
+  if (window.parent !== window) {
+    var height = document.documentElement.scrollHeight;
+    window.parent.postMessage({height: height}, '*');
+  }
+}
+
+// Envoyer la hauteur au chargement
+window.addEventListener('load', function() {
+  sendHeight();
+  // Réessayer après un court délai pour être sûr
+  setTimeout(sendHeight, 500);
+});
+
+// Envoyer la hauteur quand la fenêtre change de taille
+window.addEventListener('resize', sendHeight);
+
+// Observer les changements de contenu (inscriptions, filtres, etc.)
+var observer = new MutationObserver(function(mutations) {
+  sendHeight();
+});
+
+// Observer tout le body pour détecter les changements
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+  attributes: true
+});
+
+// Mettre à jour aussi lors du rafraîchissement des ateliers
+const originalRefreshWorkshops = window.refreshWorkshops;
+if (originalRefreshWorkshops) {
+  window.refreshWorkshops = async function() {
+    await originalRefreshWorkshops.apply(this, arguments);
+    setTimeout(sendHeight, 100);
+  };
+}
+</script>
+</body>
 </body>
 </html>
