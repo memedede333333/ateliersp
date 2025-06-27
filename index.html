@@ -1002,39 +1002,69 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
     </script>
    <script>
 // Communication avec WordPress pour ajustement hauteur
-function sendHeight() {
+<script>
+// Calculer et envoyer la hauteur réelle du contenu
+function calculateAndSendHeight() {
   if (window.parent !== window) {
-    var height = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
-    window.parent.postMessage({height: height}, '*');
+    // Attendre que tout soit bien chargé
+    setTimeout(function() {
+      // Trouver l'élément le plus bas de la page
+      var elements = document.querySelectorAll('*');
+      var maxBottom = 0;
+      
+      elements.forEach(function(el) {
+        var rect = el.getBoundingClientRect();
+        var bottom = rect.bottom + window.pageYOffset;
+        if (bottom > maxBottom) {
+          maxBottom = bottom;
+        }
+      });
+      
+      // Ajouter une marge de sécurité
+      var totalHeight = maxBottom + 100;
+      
+      // Envoyer une seule fois la hauteur finale
+      window.parent.postMessage({
+        height: totalHeight,
+        action: 'setHeight'
+      }, '*');
+    }, 1000);
   }
 }
 
-// Envoyer la hauteur après chargement complet
-window.addEventListener('load', function() {
-  setTimeout(sendHeight, 100);
-  setTimeout(sendHeight, 500);
-  setTimeout(sendHeight, 1000);
+// Calculer après chaque changement important
+window.addEventListener('load', calculateAndSendHeight);
+
+// Recalculer quand les ateliers sont filtrés
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('filter-btn') || 
+      e.target.classList.contains('btn-inscription')) {
+    setTimeout(calculateAndSendHeight, 500);
+  }
 });
 
-// Envoyer quand le contenu change
-window.addEventListener('resize', sendHeight);
-
-// Observer tous les changements
-var observer = new MutationObserver(function() {
-  setTimeout(sendHeight, 100);
+// Observer les changements de contenu
+var contentObserver = new MutationObserver(function(mutations) {
+  var shouldRecalculate = false;
+  mutations.forEach(function(mutation) {
+    if (mutation.target.id === 'workshops-grid' || 
+        mutation.target.classList.contains('workshop-card')) {
+      shouldRecalculate = true;
+    }
+  });
+  if (shouldRecalculate) {
+    calculateAndSendHeight();
+  }
 });
 
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-  attributes: true
-});
+// Observer uniquement la grille des ateliers
+var grid = document.getElementById('workshops-grid');
+if (grid) {
+  contentObserver.observe(grid, {
+    childList: true,
+    subtree: true
+  });
+}
 </script>
 </body>
 </html>
