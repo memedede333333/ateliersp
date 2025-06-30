@@ -1005,72 +1005,7 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
             // Recharger automatiquement toutes les 30 secondes
             setInterval(loadFromGoogleSheets, 30000);
         });
-    </script>
-   <script>
 
-<script>
-// Calculer et envoyer la hauteur réelle du contenu
-function calculateAndSendHeight() {
-  if (window.parent !== window) {
-    // Attendre que tout soit bien chargé
-    setTimeout(function() {
-      // Trouver l'élément le plus bas de la page
-      var elements = document.querySelectorAll('*');
-      var maxBottom = 0;
-      
-      elements.forEach(function(el) {
-        var rect = el.getBoundingClientRect();
-        var bottom = rect.bottom + window.pageYOffset;
-        if (bottom > maxBottom) {
-          maxBottom = bottom;
-        }
-      });
-      
-      // Ajouter une marge de sécurité
-      var totalHeight = maxBottom + 100;
-      
-      // Envoyer une seule fois la hauteur finale
-      window.parent.postMessage({
-        height: totalHeight,
-        action: 'setHeight'
-      }, '*');
-    }, 1000);
-  }
-}
-
-// Calculer après chaque changement important
-window.addEventListener('load', calculateAndSendHeight);
-
-// Recalculer quand les ateliers sont filtrés
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('filter-btn') || 
-      e.target.classList.contains('btn-inscription')) {
-    setTimeout(calculateAndSendHeight, 500);
-  }
-});
-
-// Observer les changements de contenu
-var contentObserver = new MutationObserver(function(mutations) {
-  var shouldRecalculate = false;
-  mutations.forEach(function(mutation) {
-    if (mutation.target.id === 'workshops-grid' || 
-        mutation.target.classList.contains('workshop-card')) {
-      shouldRecalculate = true;
-    }
-  });
-  if (shouldRecalculate) {
-    calculateAndSendHeight();
-  }
-});
-
-// Observer uniquement la grille des ateliers
-var grid = document.getElementById('workshops-grid');
-if (grid) {
-  contentObserver.observe(grid, {
-    childList: true,
-    subtree: true
-  });
-}
 </script>
 </body>
 </html>
