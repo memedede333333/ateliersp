@@ -824,34 +824,9 @@
                 `;
 
                 document.getElementById('confirmDetails').innerHTML = details;
-                // Colorer le statut si liste d'attente
-if (isWaitingList) {
-    const statusElements = document.querySelectorAll('#confirmDetails p');
-    statusElements.forEach(p => {
-        if (p.innerHTML.includes('Statut :')) {
-            p.innerHTML = p.innerHTML.replace('Liste d\'attente', '<span style="color: #dc3545; font-weight: bold;">Liste d\'attente</span>');
-        }
-    });
-}
-                // Personnaliser le popup selon le statut
-const modalTitle = document.querySelector('#confirmModal h2');
-if (isWaitingList) {
-    modalTitle.innerHTML = 'Préinscription sur liste d\'attente enregistrée !';
-    modalTitle.style.color = '#ff6b35'; // Orange pour liste d'attente
-} else {
-    modalTitle.innerHTML = 'Préinscription enregistrée !';
-    modalTitle.style.color = '#1e4d8b'; // Bleu normal
-}
                 // Mettre à jour le message du popup avec le paramètre admin
-// Personnaliser le message selon le statut
-if (isWaitingList) {
-    document.getElementById('messageImportant').style.display = 'block';
-    document.getElementById('messageVirementPopup').textContent = 'Votre enfant est actuellement sur liste d\'attente. Nous vous contacterons si une place se libère.';
-} else {
-    document.getElementById('messageImportant').style.display = 'block';
-    if (adminParams['Message virement popup']) {
-        document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
-    }
+if (adminParams['Message virement popup']) {
+    document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
 }
                 document.getElementById('confirmModal').style.display = 'flex';
 
