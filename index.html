@@ -830,6 +830,15 @@ if (isWaitingList) {
     modalTitle.textContent = 'Préinscription sur liste d\'attente enregistrée !';
     modalTitle.style.color = '#ff6b35'; // Orange
 }
+                // Colorer le statut "Liste d'attente" en rouge
+if (isWaitingList) {
+    const statusElements = document.querySelectorAll('#confirmDetails p');
+    statusElements.forEach(p => {
+        if (p.innerHTML.includes('Statut :')) {
+            p.innerHTML = p.innerHTML.replace('Liste d\'attente', '<span style="color: #dc3545; font-weight: bold;">Liste d\'attente</span>');
+        }
+    });
+}
                 // Mettre à jour le message du popup avec le paramètre admin
 if (adminParams['Message virement popup']) {
     document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
