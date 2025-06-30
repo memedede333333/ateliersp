@@ -824,8 +824,9 @@
                 `;
 
                 document.getElementById('confirmDetails').innerHTML = details;
-                // Personnaliser le titre si liste d'attente
-if (isWaitingList) {
+// Personnaliser le titre si liste d'attente
+const statusText = document.querySelector('#confirmDetails p:nth-child(4)').textContent;
+if (statusText.includes('Liste d\'attente')) {
     const modalTitle = document.querySelector('#confirmModal h2');
     modalTitle.textContent = 'Préinscription sur liste d\'attente enregistrée !';
     modalTitle.style.color = '#ff6b35'; // Orange
