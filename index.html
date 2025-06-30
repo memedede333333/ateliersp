@@ -824,6 +824,12 @@
                 `;
 
                 document.getElementById('confirmDetails').innerHTML = details;
+                // Personnaliser le titre si liste d'attente
+if (isWaitingList) {
+    const modalTitle = document.querySelector('#confirmModal h2');
+    modalTitle.textContent = 'Préinscription sur liste d\'attente enregistrée !';
+    modalTitle.style.color = '#ff6b35'; // Orange
+}
                 // Mettre à jour le message du popup avec le paramètre admin
 if (adminParams['Message virement popup']) {
     document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
