@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
             --accent-green: #4caf50;
             --accent-yellow: #ffc107;
             --light-bg: #f5f7fa;
-            --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -101,7 +102,8 @@
             color: var(--primary-blue);
         }
 
-        .form-group input, .form-group select {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 10px;
             border: 2px solid #e0e0e0;
@@ -110,7 +112,8 @@
             transition: border-color 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--secondary-blue);
         }
@@ -135,7 +138,7 @@
 
         .atelier-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
         .atelier-card::before {
@@ -148,10 +151,21 @@
             background: var(--accent-orange);
         }
 
-        .atelier-card.anglais::before { background: var(--accent-orange); }
-        .atelier-card.sport::before { background: var(--accent-green); }
-        .atelier-card.musique::before { background: var(--accent-yellow); }
-        .atelier-card.culture::before { background: var(--secondary-blue); }
+        .atelier-card.anglais::before {
+            background: var(--accent-orange);
+        }
+
+        .atelier-card.sport::before {
+            background: var(--accent-green);
+        }
+
+        .atelier-card.musique::before {
+            background: var(--accent-yellow);
+        }
+
+        .atelier-card.culture::before {
+            background: var(--secondary-blue);
+        }
 
         .atelier-header {
             display: flex;
@@ -249,7 +263,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -270,6 +284,7 @@
                 transform: translateY(-50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -383,7 +398,8 @@
                 font-size: 14px;
             }
 
-            .form-group input, .form-group select {
+            .form-group input,
+            .form-group select {
                 font-size: 16px;
                 padding: 12px;
             }
@@ -499,45 +515,66 @@
         }
 
         @keyframes dots {
-            0%, 20% { content: '⚪⚪⚪'; }
-            40% { content: '🔵⚪⚪'; }
-            60% { content: '🔵🔵⚪'; }
-            80%, 100% { content: '🔵🔵🔵'; }
+
+            0%,
+            20% {
+                content: '⚪⚪⚪';
+            }
+
+            40% {
+                content: '🔵⚪⚪';
+            }
+
+            60% {
+                content: '🔵🔵⚪';
+            }
+
+            80%,
+            100% {
+                content: '🔵🔵🔵';
+            }
         }
 
         /* Animation de rotation */
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-/* Message personnalisé */
-.message-personnalise {
-    background: #e3f2fd;
-    border-left: 4px solid var(--secondary-blue);
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    display: none;
-}
 
-.message-personnalise-content {
-    color: #1565c0;
-    font-size: 16px;
-    line-height: 1.5;
-}
+        /* Message personnalisé */
+        .message-personnalise {
+            background: #e3f2fd;
+            border-left: 4px solid var(--secondary-blue);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
 
-@media (max-width: 768px) {
-    .message-personnalise {
-        padding: 12px 15px;
-        margin-bottom: 15px;
-    }
-    
-    .message-personnalise-content {
-        font-size: 14px;
-    }
-}
+        .message-personnalise-content {
+            color: #1565c0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .message-personnalise {
+                padding: 12px 15px;
+                margin-bottom: 15px;
+            }
+
+            .message-personnalise-content {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="header-content">
@@ -553,11 +590,11 @@
         <!-- Alertes -->
         <div id="alert" class="alert"></div>
         <!-- Message personnalisé -->
-<div id="messagePersonnalise" class="message-personnalise">
-    <div class="message-personnalise-content">
-        <span>📢 </span><span id="messagePersonnaliseTexte"></span>
-    </div>
-</div>
+        <div id="messagePersonnalise" class="message-personnalise">
+            <div class="message-personnalise-content">
+                <span>📢 </span><span id="messagePersonnaliseTexte"></span>
+            </div>
+        </div>
 
         <!-- Formulaire d'inscription -->
         <div class="inscription-form">
@@ -607,8 +644,9 @@
                 <h2>Préinscription enregistrée !</h2>
                 <div id="confirmDetails"></div>
                 <p style="margin-top: 20px; color: #666;">
-    <strong>Important :</strong> <span id="messageVirementPopup">La préinscription sera définitivement validée après réception du règlement.</span>
-</p>
+                    <strong>Important :</strong> <span id="messageVirementPopup">La préinscription sera définitivement
+                        validée après réception du règlement.</span>
+                </p>
                 <div class="modal-buttons">
                     <button class="btn-confirm" onclick="closeModal()">Fermer</button>
                 </div>
@@ -633,12 +671,12 @@
 
     <script>
         // Configuration Google Sheets
-        const SHEET_ID = '1RPZm3bq0AtbVsANRh5NX1_9QkSgVuYGA_tsfZFcoSt0';
+        const SHEET_ID = '1qCJmyjLPy_TY-VV0Ff14OvoGwNZfXZmbdxk5Ym47gmM';
         const API_KEY = 'AIzaSyDB5F0m8Kf8E6aBGjjSqLTJI84fqb6VEuA';
         const SHEET_NAME = 'Ateliers';
         const INSCRIPTIONS_SHEET = 'Inscriptions';
         const ADMIN_SHEET = 'Admin';
-        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxpsZagUFu7s5rKcTJUVJ-NA8my5T7Bo5aEEen6uQ1BFuccy7uGksrUoBgXiud9jYz_1A/exec';
+        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzWgtAYOIqyn4TJ1WgtPCPfJKzGBLJWcFMe7K3nPWho9XOT4yzhfvx-WLK9ldPter53/exec';
 
         // Données des ateliers (sera remplacé par les données Google Sheets)
         let ateliersDataGlobal = [];
@@ -650,7 +688,7 @@
         let inscriptionsEnCours = []; // Pour tracker les inscriptions en cours
 
         // Écouter les changements de classe
-        document.getElementById('classe').addEventListener('change', function(e) {
+        document.getElementById('classe').addEventListener('change', function (e) {
             selectedClasse = e.target.value;
             afficherAteliers();
         });
@@ -660,7 +698,7 @@
             const grid = document.getElementById('ateliersGrid');
             grid.innerHTML = '';
 
-            const ateliersFiltered = selectedClasse 
+            const ateliersFiltered = selectedClasse
                 ? ateliersDataGlobal.filter(atelier => atelier.classes.includes(selectedClasse))
                 : ateliersDataGlobal;
 
@@ -679,10 +717,10 @@
             const placesRestantes = atelier.placesMax - atelier.placesOccupees;
             const pourcentageOccupe = (atelier.placesOccupees / atelier.placesMax) * 100;
             const isWaitingList = placesRestantes <= 0;
-            
+
             const card = document.createElement('div');
             card.className = `atelier-card ${atelier.categorie}`;
-            
+
             card.innerHTML = `
                 <div class="atelier-header">
                     <div class="atelier-title">${atelier.nom}</div>
@@ -705,12 +743,12 @@
                 </div>
                 <button class="btn-inscrire" onclick="inscrire('${atelier.groupe}')" 
                         ${!selectedClasse || !atelier.classes.includes(selectedClasse) ? 'disabled' : ''}>
-                    ${!selectedClasse ? 'Sélectionnez une classe' : 
-                      !atelier.classes.includes(selectedClasse) ? 'Non disponible' :
-                      isWaitingList ? 'S\'inscrire (liste d\'attente)' : 'S\'inscrire'}
+                    ${!selectedClasse ? 'Sélectionnez une classe' :
+                    !atelier.classes.includes(selectedClasse) ? 'Non disponible' :
+                        isWaitingList ? 'S\'inscrire (liste d\'attente)' : 'S\'inscrire'}
                 </button>
             `;
-            
+
             return card;
         }
 
@@ -726,14 +764,14 @@
             // Récupérer le bouton cliqué
             const bouton = event.target;
             const texteOriginal = bouton.textContent;
-            
+
             // Désactiver TOUS les boutons d'inscription
             const tousBoutons = document.querySelectorAll('.btn-inscrire');
             tousBoutons.forEach(btn => {
                 btn.disabled = true;
                 btn.style.cursor = 'wait';
             });
-            
+
             // Changer le texte du bouton cliqué
             bouton.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⏳</span> Inscription en cours...';
 
@@ -748,8 +786,8 @@
             };
 
             // Vérifier si déjà inscrit
-            const dejaInscrit = inscriptionsEnCours.some(inscription => 
-                inscription.email === studentInfo.email && 
+            const dejaInscrit = inscriptionsEnCours.some(inscription =>
+                inscription.email === studentInfo.email &&
                 inscription.atelier === studentInfo.atelier
             );
 
@@ -762,7 +800,7 @@
                 `;
                 document.getElementById('existingDetails').innerHTML = details;
                 document.getElementById('existingModal').style.display = 'flex';
-                
+
                 // Réactiver les boutons
                 tousBoutons.forEach(btn => {
                     btn.disabled = false;
@@ -773,25 +811,25 @@
             }
 
             // Ajouter temporairement à la liste
-            inscriptionsEnCours.push({...studentInfo});
+            inscriptionsEnCours.push({ ...studentInfo });
 
             // Envoyer l'inscription
             try {
                 await simulerInscription(studentInfo);
-                
+
                 // Réinitialiser le formulaire après succès
                 form.reset();
                 selectedClasse = '';
                 afficherAteliers();
-                
+
             } catch (error) {
                 // En cas d'erreur, retirer de la liste temporaire
-                inscriptionsEnCours = inscriptionsEnCours.filter(i => 
+                inscriptionsEnCours = inscriptionsEnCours.filter(i =>
                     !(i.email === studentInfo.email && i.atelier === studentInfo.atelier)
                 );
-                
+
                 showAlert('error', 'Erreur lors de l\'inscription. Veuillez réessayer.');
-                
+
                 // Réactiver les boutons
                 tousBoutons.forEach(btn => {
                     btn.disabled = false;
@@ -815,7 +853,7 @@
             });
 
             if (success) {
-              const details = `
+                const details = `
     <p><strong>Élève :</strong> ${info.prenom} ${info.nom}</p>
     <p><strong>Classe :</strong> ${info.classe}</p>
     <p><strong>Atelier :</strong> ${atelier.nom}</p>
@@ -824,31 +862,31 @@
                 `;
 
                 document.getElementById('confirmDetails').innerHTML = details;
-// Personnaliser le titre si liste d'attente
-const statusText = document.querySelector('#confirmDetails p:nth-child(4)').textContent;
-if (statusText.includes('Liste d\'attente')) {
-    const modalTitle = document.querySelector('#confirmModal h2');
-    modalTitle.textContent = 'Préinscription sur liste d\'attente enregistrée !';
-    modalTitle.style.color = '#ff6b35'; // Orange
-}
+                // Personnaliser le titre si liste d'attente
+                const statusText = document.querySelector('#confirmDetails p:nth-child(4)').textContent;
+                if (statusText.includes('Liste d\'attente')) {
+                    const modalTitle = document.querySelector('#confirmModal h2');
+                    modalTitle.textContent = 'Préinscription sur liste d\'attente enregistrée !';
+                    modalTitle.style.color = '#ff6b35'; // Orange
+                }
                 // Colorer le statut "Liste d'attente" en rouge
-if (isWaitingList) {
-    const statusElements = document.querySelectorAll('#confirmDetails p');
-    statusElements.forEach(p => {
-        if (p.innerHTML.includes('Statut :')) {
-            p.innerHTML = p.innerHTML.replace('Liste d\'attente', '<span style="color: #dc3545; font-weight: bold;">Liste d\'attente</span>');
-        }
-    });
-}
-               // Personnaliser le message selon le statut
-if (isWaitingList) {
-    document.getElementById('messageVirementPopup').textContent = 'Votre enfant est actuellement sur liste d\'attente. Nous vous contacterons si une place se libère.';
-} else {
-    // Message normal pour les préinscrits
-    if (adminParams['Message virement popup']) {
-        document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
-    }
-}
+                if (isWaitingList) {
+                    const statusElements = document.querySelectorAll('#confirmDetails p');
+                    statusElements.forEach(p => {
+                        if (p.innerHTML.includes('Statut :')) {
+                            p.innerHTML = p.innerHTML.replace('Liste d\'attente', '<span style="color: #dc3545; font-weight: bold;">Liste d\'attente</span>');
+                        }
+                    });
+                }
+                // Personnaliser le message selon le statut
+                if (isWaitingList) {
+                    document.getElementById('messageVirementPopup').textContent = 'Votre enfant est actuellement sur liste d\'attente. Nous vous contacterons si une place se libère.';
+                } else {
+                    // Message normal pour les préinscrits
+                    if (adminParams['Message virement popup']) {
+                        document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
+                    }
+                }
                 document.getElementById('confirmModal').style.display = 'flex';
 
                 // Recharger les données pour avoir le compte à jour
@@ -873,7 +911,7 @@ if (isWaitingList) {
         }
 
         // Fermer les modals en cliquant à l'extérieur
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const confirmModal = document.getElementById('confirmModal');
             const existingModal = document.getElementById('existingModal');
             if (event.target == confirmModal) {
@@ -899,13 +937,13 @@ if (isWaitingList) {
         async function loadFromGoogleSheets() {
             try {
                 document.getElementById('loading').style.display = 'block';
-                
+
                 // Charger les paramètres depuis l'onglet Admin
                 const adminResponse = await fetch(
                     `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${ADMIN_SHEET}!A1:B15?key=${API_KEY}`
                 );
                 const adminData = await adminResponse.json();
-                
+
                 // Extraire les paramètres admin (année, dates, etc.)
                 adminParams = {};
                 if (adminData.values) {
@@ -915,34 +953,34 @@ if (isWaitingList) {
                         }
                     });
                 }
-                
+
                 // Mettre à jour le titre avec l'année scolaire
                 if (adminParams['Année scolaire']) {
-                    document.querySelector('.header h1').textContent = 
+                    document.querySelector('.header h1').textContent =
                         `Inscriptions Périscolaires ${adminParams['Année scolaire']}`;
                 }
                 // Afficher le message personnalisé
-if (adminParams['Message personnalisé'] && adminParams['Message personnalisé'].trim() !== '') {
-    document.getElementById('messagePersonnalise').style.display = 'block';
-    document.getElementById('messagePersonnaliseTexte').textContent = adminParams['Message personnalisé'];
-}
-                
+                if (adminParams['Message personnalisé'] && adminParams['Message personnalisé'].trim() !== '') {
+                    document.getElementById('messagePersonnalise').style.display = 'block';
+                    document.getElementById('messagePersonnaliseTexte').textContent = adminParams['Message personnalisé'];
+                }
+
                 // Charger les ateliers
                 const ateliersResponse = await fetch(
                     `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A2:J50?key=${API_KEY}`
                 );
                 const ateliersData = await ateliersResponse.json();
-                
+
                 // Charger le nombre d'inscriptions
                 const inscriptionsResponse = await fetch(
                     `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${INSCRIPTIONS_SHEET}!A2:H1000?key=${API_KEY}`
                 );
                 const inscriptionsData = await inscriptionsResponse.json();
-                
+
                 // Compter les inscriptions par atelier et stocker les inscriptions existantes
                 const compteurInscriptions = {};
                 inscriptionsEnCours = []; // Réinitialiser
-                
+
                 if (inscriptionsData.values) {
                     inscriptionsData.values.forEach(row => {
                         const atelier = row[5]; // Colonne F = Atelier
@@ -950,10 +988,10 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
                         const email = row[4]; // Colonne E = Email
                         const prenom = row[1]; // Colonne B = Prénom
                         const nom = row[2]; // Colonne C = Nom
-                        
+
                         if (atelier && statut !== 'Annulé') {
                             compteurInscriptions[atelier] = (compteurInscriptions[atelier] || 0) + 1;
-                            
+
                             // Stocker les inscriptions existantes
                             inscriptionsEnCours.push({
                                 email: email,
@@ -964,7 +1002,7 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
                         }
                     });
                 }
-                
+
                 // Transformer les données en format utilisable
                 if (ateliersData.values) {
                     ateliersDataGlobal = ateliersData.values.map(row => ({
@@ -980,12 +1018,12 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
                         icon: row[9] || '📚',
                         actif: row[10] !== 'Non' // Colonne K pour activer/désactiver
                     })).filter(atelier => atelier.actif && atelier.nom); // Filtrer les ateliers actifs
-                    
+
                     afficherAteliers();
                 }
-                
+
                 document.getElementById('loading').style.display = 'none';
-                
+
             } catch (error) {
                 console.error('Erreur lors du chargement:', error);
                 document.getElementById('loading').style.display = 'none';
@@ -1004,7 +1042,7 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
                     },
                     body: JSON.stringify(inscription)
                 });
-                
+
                 return true;
             } catch (error) {
                 console.error('Erreur lors de l\'enregistrement:', error);
@@ -1013,14 +1051,15 @@ if (adminParams['Message personnalisé'] && adminParams['Message personnalisé']
         }
 
         // Initialiser l'affichage
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Charger les données depuis Google Sheets au démarrage
             loadFromGoogleSheets();
-            
+
             // Recharger automatiquement toutes les 30 secondes
             setInterval(loadFromGoogleSheets, 30000);
         });
 
-</script>
+    </script>
 </body>
+
 </html>
