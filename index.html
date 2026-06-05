@@ -1278,6 +1278,7 @@
         let selectedClasse = '';
         let studentInfo = {};
         let inscriptionsEnCours = [];
+        let inscriptionsOuvertes = true;
 
         // ───── Mapping icônes & catégories par mot-clé ─────
         const CATEGORY_MAP = [
@@ -1376,11 +1377,15 @@
             card.style.setProperty('--cat-color', cat.color);
             card.style.setProperty('--cat-bg', cat.bg);
 
-            const canRegister = !!selectedClasse && atelier.classes.includes(selectedClasse);
+            const isClassDispo = !!selectedClasse && atelier.classes.includes(selectedClasse);
+            const canRegister = inscriptionsOuvertes && isClassDispo;
+
             let btnLabel = "Sélectionnez une classe";
-            if (canRegister) {
+            if (!inscriptionsOuvertes) {
+                btnLabel = "Clôturé";
+            } else if (canRegister) {
                 btnLabel = isWaitingList ? "S'inscrire (liste d'attente)" : "S'inscrire à l'atelier";
-            } else if (selectedClasse && !atelier.classes.includes(selectedClasse)) {
+            } else if (selectedClasse && !isClassDispo) {
                 btnLabel = "Non disponible pour cette classe";
             }
 
@@ -1579,6 +1584,15 @@
                     adminData.values.forEach(row => {
                         if (row[0] && row[1]) adminParams[row[0]] = row[1];
                     });
+                }
+
+                inscriptionsOuvertes = !(adminParams['Inscriptions ouvertes'] && adminParams['Inscriptions ouvertes'].toString().trim().toLowerCase() === 'non');
+
+                if (!inscriptionsOuvertes) {
+                    const eyebrow = document.querySelector('.hero-eyebrow span:last-child');
+                    if (eyebrow) eyebrow.textContent = 'Inscriptions clôturées';
+                    const heroSub = document.querySelector('.hero-sub');
+                    if (heroSub) heroSub.innerHTML = '<strong>Les inscriptions sont actuellement fermées.</strong>';
                 }
 
                 if (adminParams['Année scolaire']) {
