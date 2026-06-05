@@ -189,6 +189,16 @@
             box-shadow: 0 0 0 4px rgba(61, 141, 84, 0.15);
         }
 
+        .hero-eyebrow.closed {
+            background: linear-gradient(135deg, rgba(200, 70, 58, 0.1), rgba(200, 70, 58, 0.05));
+            color: #c8463a;
+        }
+
+        .hero-eyebrow.closed .dot {
+            background: #c8463a;
+            box-shadow: 0 0 0 4px rgba(200, 70, 58, 0.15);
+        }
+
         .hero h1 {
             font-family: 'Fraunces', Georgia, serif;
             font-weight: 400;
@@ -1589,6 +1599,8 @@
                 inscriptionsOuvertes = !(adminParams['Inscriptions ouvertes'] && adminParams['Inscriptions ouvertes'].toString().trim().toLowerCase() === 'non');
 
                 if (!inscriptionsOuvertes) {
+                    const eyebrowContainer = document.querySelector('.hero-eyebrow');
+                    if (eyebrowContainer) eyebrowContainer.classList.add('closed');
                     const eyebrow = document.querySelector('.hero-eyebrow span:last-child');
                     if (eyebrow) eyebrow.textContent = 'Inscriptions clôturées';
                     const heroSub = document.querySelector('.hero-sub');
