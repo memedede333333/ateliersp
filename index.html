@@ -1144,7 +1144,7 @@
         <h1>Inscriptions <em>périscolaires</em></h1>
         <p class="hero-sub">
             Tennis, musique, théâtre, langues, échecs… Découvrez les ateliers proposés à vos enfants
-            et préinscrivez-les en quelques instants.
+            et inscrivez-les en quelques instants.
         </p>
     </section>
 
@@ -1237,14 +1237,9 @@
                         <use href="#i-check" />
                     </svg>
                 </div>
-                <h2 id="modalTitle">Préinscription enregistrée</h2>
+                <h2 id="modalTitle">Inscription confirmée</h2>
                 <p class="modal-sub" id="modalSub">Vous allez recevoir un email de confirmation.</p>
                 <div class="modal-details" id="confirmDetails"></div>
-                <div class="modal-note">
-                    <strong>Important —</strong>
-                    <span id="messageVirementPopup">La préinscription sera définitivement validée après réception du
-                        règlement.</span>
-                </div>
                 <div class="modal-buttons">
                     <button class="btn btn-primary" onclick="closeModal()">Parfait, merci</button>
                 </div>
@@ -1505,10 +1500,10 @@
             const isWaitingList = atelier.placesOccupees >= atelier.placesMax;
             const position = atelier.placesOccupees + 1;
 
-            // ─── Affichage IMMÉDIAT de la modale (avant réponse serveur) ───
+            // PIVOT : statut "Inscrit" au lieu de "Préinscrit"
             const statutHtml = isWaitingList
                 ? `<span style="color:var(--full);font-weight:700;">Liste d'attente</span>`
-                : `<span style="color:var(--ok);font-weight:700;">Préinscrit</span>`;
+                : `<span style="color:var(--ok);font-weight:700;">Inscrit</span>`;
 
             document.getElementById('confirmDetails').innerHTML = `
                 <dl>
@@ -1528,27 +1523,22 @@
                 modalSub.textContent = "Votre demande a bien été prise en compte.";
                 modalIconWrap.className = 'modal-icon warn';
                 modalIconWrap.innerHTML = '<svg><use href="#i-alert"/></svg>';
-                document.getElementById('messageVirementPopup').textContent =
-                    "Votre enfant est actuellement sur liste d'attente. Nous vous contacterons si une place se libère.";
             } else {
-                modalTitle.textContent = "Préinscription prise en compte";
+                modalTitle.textContent = "Inscription confirmée";
                 modalSub.textContent = "Un email récapitulatif vous sera envoyé dans quelques instants.";
                 modalIconWrap.className = 'modal-icon success';
                 modalIconWrap.innerHTML = '<svg><use href="#i-check"/></svg>';
-                if (adminParams['Message virement popup']) {
-                    document.getElementById('messageVirementPopup').textContent = adminParams['Message virement popup'];
-                }
             }
 
             // Afficher la modale immédiatement
             document.getElementById('confirmModal').style.display = 'flex';
-            showAlert('success', 'Préinscription prise en compte !');
+            showAlert('success', 'Inscription confirmée !');
 
-            // ─── Envoi au serveur en arrière-plan ───
+            // Envoi au serveur en arrière-plan
             saveToGoogleSheets({
                 ...info,
                 position: position,
-                statut: isWaitingList ? "Liste d'attente" : 'Préinscrit'
+                statut: isWaitingList ? "Liste d'attente" : 'Inscrit'
             }).then(success => {
                 if (!success) {
                     showAlert('error', "Attention : l'enregistrement a pu échouer. Contactez l'école si vous ne recevez pas d'email.");
