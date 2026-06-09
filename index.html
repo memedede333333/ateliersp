@@ -1532,6 +1532,8 @@
 
             // Afficher la modale immédiatement
             document.getElementById('confirmModal').style.display = 'flex';
+            document.getElementById('confirmModal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             showAlert('success', 'Inscription confirmée !');
 
             // Envoi au serveur en arrière-plan
